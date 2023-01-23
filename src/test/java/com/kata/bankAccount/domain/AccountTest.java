@@ -10,7 +10,7 @@ public class AccountTest {
 
     @Test
     public void new_account_should_have_zero_as_balance() {
-        assertEquals(BigDecimal.ZERO, new Account().balance());
+        assertEquals(new Balance(BigDecimal.ZERO), new Account().balance());
     }
 
     @Test
@@ -19,7 +19,7 @@ public class AccountTest {
 
         newAccount.deposit(amount10());
 
-        assertEquals(BigDecimal.TEN, newAccount.balance());
+        assertEquals(new Balance(BigDecimal.TEN), newAccount.balance());
     }
 
     @Test
@@ -46,5 +46,15 @@ public class AccountTest {
 
     private Amount amount10() {
         return new Amount(BigDecimal.TEN);
+    }
+
+    @Test
+    public void withdrawal_10_should_give_10_when_balance_is_ok() {
+        final Account newAccount = new Account();
+
+        newAccount.deposit(new Amount(new BigDecimal(100)));
+
+        assertEquals(new Amount(BigDecimal.TEN), newAccount.withdrawal(new Amount(BigDecimal.TEN)));
+        assertEquals(new Balance(new BigDecimal(90)), newAccount.balance());
     }
 }

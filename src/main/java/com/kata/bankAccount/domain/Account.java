@@ -6,8 +6,8 @@ public class Account {
 
     private Balance balance = new Balance(BigDecimal.ZERO);
 
-    public BigDecimal balance() {
-        return balance.balance();
+    public Balance balance() {
+        return balance;
     }
 
     public void deposit(final Amount amount) {
@@ -20,5 +20,11 @@ public class Account {
 
     private static boolean isNegativOrZeroAmount(Amount amount) {
         return amount.value.compareTo(BigDecimal.ZERO) <= 0;
+    }
+
+    public Amount withdrawal(final Amount amount) {
+        balance = balance.substract(amount);
+
+        return amount;
     }
 }
