@@ -58,4 +58,23 @@ public class AccountTest {
         });
         assertEquals(new Balance(10), newAccount.balance());
     }
+
+    @Test
+    public void withdrawal_all_balance_should_give_all_balance() {
+        final Account newAccount = new Account();
+        newAccount.deposit(new Amount(50));
+
+        final Amount withdrawalAmount = newAccount.withdrawalAll();
+
+        assertEquals(new Amount(50), withdrawalAmount);
+    }
+
+    @Test
+    public void withdrawal_all_when_balance_is_empty_should_be_blocked() {
+        final Account newAccount = new Account();
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            newAccount.withdrawalAll();
+        });
+    }
 }

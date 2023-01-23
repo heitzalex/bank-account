@@ -18,10 +18,12 @@ public class Balance {
     }
 
     public Balance add(final Amount amountToAdd) {
-        return new Balance(value.add(amountToAdd.value));
+        final BigDecimal resultingValue = value.add(amountToAdd.value);
+        return new Balance(resultingValue);
     }
 
     public Balance substract(final Amount amountToSubstract) {
-        return new Balance(value.subtract(amountToSubstract.value));
+        final BigDecimal resultingValue = value.subtract(amountToSubstract.value);
+        return new Balance(resultingValue);
     }
 }

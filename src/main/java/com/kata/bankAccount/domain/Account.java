@@ -35,4 +35,16 @@ public class Account {
     private boolean isWithdrawalMoreThanBalanceAccount(final Amount amount) {
         return amount.value.compareTo(balance.value) > 0;
     }
+
+    public Amount withdrawalAll() {
+        if (hasNoBalanceOnAccount()) {
+            throw new IllegalArgumentException("Impossible to withdrawal when there is no balance on the account.");
+        }
+
+        return new Amount(balance.value);
+    }
+
+    private boolean hasNoBalanceOnAccount() {
+        return balance.value.compareTo(BigDecimal.ZERO) == 0;
+    }
 }
