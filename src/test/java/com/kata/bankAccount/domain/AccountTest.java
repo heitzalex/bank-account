@@ -10,16 +10,16 @@ public class AccountTest {
 
     @Test
     public void new_account_should_have_zero_as_balance() {
-        assertEquals(new BigDecimal(0), new Account().balance());
+        assertEquals(BigDecimal.ZERO, new Account().balance());
     }
 
     @Test
     public void deposit_10_on_new_account_should_have_10_as_balance() {
         final Account newAccount = new Account();
 
-        newAccount.deposit(new BigDecimal(10));
+        newAccount.deposit(amount10());
 
-        assertEquals(new BigDecimal(10), newAccount.balance());
+        assertEquals(BigDecimal.TEN, newAccount.balance());
     }
 
     @Test
@@ -27,7 +27,7 @@ public class AccountTest {
         final Account newAccount = new Account();
 
         assertThrows(IllegalArgumentException.class, () -> {
-            newAccount.deposit(new BigDecimal(0));
+            newAccount.deposit(amount0());
         });
     }
 
@@ -36,7 +36,15 @@ public class AccountTest {
         final Account newAccount = new Account();
 
         assertThrows(IllegalArgumentException.class, () -> {
-            newAccount.deposit(new BigDecimal(-10));
+            newAccount.deposit(new Amount(new BigDecimal(-10)));
         });
+    }
+
+    private Amount amount0() {
+        return new Amount(BigDecimal.ZERO);
+    }
+
+    private Amount amount10() {
+        return new Amount(BigDecimal.TEN);
     }
 }
