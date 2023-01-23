@@ -7,10 +7,10 @@ import java.math.BigDecimal;
 @EqualsAndHashCode
 public class Balance {
 
-    final BigDecimal balance;
+    final BigDecimal value;
 
     public Balance(final BigDecimal value) {
-        this.balance = value;
+        this.value = value;
     }
 
     public Balance(final int valueInInt) {
@@ -18,10 +18,10 @@ public class Balance {
     }
 
     public Balance add(final Amount amountToAdd) {
-        return new Balance(balance.add(amountToAdd.value));
+        return new Balance(value.add(amountToAdd.value));
     }
 
     public Balance substract(final Amount amountToSubstract) {
-        return new Balance(balance.subtract(amountToSubstract.value));
+        return new Balance(value.subtract(amountToSubstract.value));
     }
 }

@@ -41,10 +41,21 @@ public class AccountTest {
     @Test
     public void withdrawal_10_should_give_10_when_balance_is_ok() {
         final Account newAccount = new Account();
-
         newAccount.deposit(new Amount(100));
 
         assertEquals(new Amount(10), newAccount.withdrawal(new Amount(10)));
         assertEquals(new Balance(90), newAccount.balance());
+    }
+
+    @Test
+    public void withdrawal_20_when_balance_is_10_should_be_blocked() {
+        final Account newAccount = new Account();
+        newAccount.deposit(new Amount(10));
+
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            newAccount.withdrawal(new Amount(20));
+        });
+        assertEquals(new Balance(10), newAccount.balance());
     }
 }

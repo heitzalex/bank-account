@@ -18,13 +18,21 @@ public class Account {
         balance = balance.add(amount);
     }
 
-    private static boolean isNegativOrZeroAmount(Amount amount) {
-        return amount.value.compareTo(BigDecimal.ZERO) <= 0;
-    }
-
     public Amount withdrawal(final Amount amount) {
+        if (isWithdrawalMoreThanBalanceAccount(amount)) {
+            throw new IllegalArgumentException("Impossible to withdrawal more than de balance in the account.");
+        }
+
         balance = balance.substract(amount);
 
         return amount;
+    }
+
+    private static boolean isNegativOrZeroAmount(final Amount amount) {
+        return amount.value.compareTo(BigDecimal.ZERO) <= 0;
+    }
+
+    private boolean isWithdrawalMoreThanBalanceAccount(final Amount amount) {
+        return amount.value.compareTo(balance.value) > 0;
     }
 }
