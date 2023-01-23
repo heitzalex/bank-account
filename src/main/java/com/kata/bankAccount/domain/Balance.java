@@ -13,8 +13,8 @@ public class Balance {
         this.balance = value;
     }
 
-    public BigDecimal balance() {
-        return balance;
+    public Balance(final int valueInInt) {
+        this(new BigDecimal(valueInInt));
     }
 
     public Balance add(final Amount amountToAdd) {

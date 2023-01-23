@@ -2,24 +2,22 @@ package com.kata.bankAccount.domain;
 
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AccountTest {
 
     @Test
     public void new_account_should_have_zero_as_balance() {
-        assertEquals(new Balance(BigDecimal.ZERO), new Account().balance());
+        assertEquals(new Balance(0), new Account().balance());
     }
 
     @Test
     public void deposit_10_on_new_account_should_have_10_as_balance() {
         final Account newAccount = new Account();
 
-        newAccount.deposit(amount10());
+        newAccount.deposit(new Amount(10));
 
-        assertEquals(new Balance(BigDecimal.TEN), newAccount.balance());
+        assertEquals(new Balance(10), newAccount.balance());
     }
 
     @Test
@@ -27,7 +25,7 @@ public class AccountTest {
         final Account newAccount = new Account();
 
         assertThrows(IllegalArgumentException.class, () -> {
-            newAccount.deposit(amount0());
+            newAccount.deposit(new Amount(0));
         });
     }
 
@@ -36,25 +34,17 @@ public class AccountTest {
         final Account newAccount = new Account();
 
         assertThrows(IllegalArgumentException.class, () -> {
-            newAccount.deposit(new Amount(new BigDecimal(-10)));
+            newAccount.deposit(new Amount(-10));
         });
-    }
-
-    private Amount amount0() {
-        return new Amount(BigDecimal.ZERO);
-    }
-
-    private Amount amount10() {
-        return new Amount(BigDecimal.TEN);
     }
 
     @Test
     public void withdrawal_10_should_give_10_when_balance_is_ok() {
         final Account newAccount = new Account();
 
-        newAccount.deposit(new Amount(new BigDecimal(100)));
+        newAccount.deposit(new Amount(100));
 
-        assertEquals(new Amount(BigDecimal.TEN), newAccount.withdrawal(new Amount(BigDecimal.TEN)));
-        assertEquals(new Balance(new BigDecimal(90)), newAccount.balance());
+        assertEquals(new Amount(10), newAccount.withdrawal(new Amount(10)));
+        assertEquals(new Balance(90), newAccount.balance());
     }
 }

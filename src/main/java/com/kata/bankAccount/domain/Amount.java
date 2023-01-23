@@ -14,4 +14,8 @@ public class Amount {
     public Amount(final BigDecimal value) {
         this.value = value;
     }
+
+    public Amount(final int valueInInt) {
+        this(new BigDecimal(valueInInt));
+    }
 }
