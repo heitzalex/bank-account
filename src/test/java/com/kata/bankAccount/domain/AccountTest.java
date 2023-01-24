@@ -1,8 +1,12 @@
 package com.kata.bankAccount.domain;
 
+import com.kata.bankAccount.infrastructure.TestStatementPrinter;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.math.BigDecimal;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class AccountTest {
 
@@ -76,5 +80,19 @@ public class AccountTest {
         assertThrows(IllegalArgumentException.class, () -> {
             newAccount.withdrawalAll();
         });
+    }
+
+    @Test
+    public void when_deposit_should_keep_operation_history() {
+        final TestStatementPrinter testPrinter = new TestStatementPrinter();
+        final Account newAccount = new Account();
+
+        newAccount.deposit(new Amount(50));
+        newAccount.printStatement(testPrinter);
+
+        final StatementLine firstStatementLineToVerify = testPrinter.getListeStatementLineToPrint().get(0);
+        assertEquals(Operation.DEPOSIT, firstStatementLineToVerify.getOperation());
+        assertEquals(new BigDecimal(50), firstStatementLineToVerify.getAmount().value);
+        assertEquals(new BigDecimal(50), firstStatementLineToVerify.getBalance().value);
     }
 }

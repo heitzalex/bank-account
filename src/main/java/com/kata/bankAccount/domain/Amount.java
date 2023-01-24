@@ -2,10 +2,12 @@ package com.kata.bankAccount.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 
 @EqualsAndHashCode
+@ToString
 public class Amount {
 
     @Getter

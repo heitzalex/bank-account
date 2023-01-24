@@ -1,10 +1,14 @@
 package com.kata.bankAccount.domain;
 
+import com.kata.bankAccount.infrastructure.ConsoleStatementPrinter;
+
 import java.math.BigDecimal;
 
 public class Account {
 
     private Balance balance = new Balance(BigDecimal.ZERO);
+
+    private Statement statement = new Statement();
 
     public Balance balance() {
         return balance;
@@ -16,6 +20,9 @@ public class Account {
         }
 
         balance = balance.add(amount);
+
+        statement.addOperationHistory(Operation.DEPOSIT, amount, balance);
+        printStatement(new ConsoleStatementPrinter());
     }
 
     public Amount withdrawal(final Amount amount) {
@@ -46,5 +53,9 @@ public class Account {
 
     private boolean hasNoBalanceOnAccount() {
         return balance.value.compareTo(BigDecimal.ZERO) == 0;
+    }
+
+    public void printStatement(final StatementPrinter printer) {
+        printer.print(statement);
     }
 }
