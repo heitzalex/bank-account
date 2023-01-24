@@ -95,4 +95,19 @@ public class AccountTest {
         assertEquals(new BigDecimal(50), firstStatementLineToVerify.getAmount().value);
         assertEquals(new BigDecimal(50), firstStatementLineToVerify.getBalance().value);
     }
+
+    @Test
+    public void when_withdrawal_it_should_keep_operation_history() {
+        final TestStatementPrinter testPrinter = new TestStatementPrinter();
+        final Account newAccount = new Account();
+        newAccount.deposit(new Amount(50));
+
+        newAccount.withdrawal(new Amount(30));
+        newAccount.printStatement(testPrinter);
+
+        final StatementLine secondStatementLineToVerify = testPrinter.getListeStatementLineToPrint().get(1);
+        assertEquals(Operation.WITHDRAWAL, secondStatementLineToVerify.getOperation());
+        assertEquals(new BigDecimal(30), secondStatementLineToVerify.getAmount().value);
+        assertEquals(new BigDecimal(20), secondStatementLineToVerify.getBalance().value);
+    }
 }

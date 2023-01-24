@@ -1,7 +1,5 @@
 package com.kata.bankAccount.domain;
 
-import com.kata.bankAccount.infrastructure.ConsoleStatementPrinter;
-
 import java.math.BigDecimal;
 
 public class Account {
@@ -22,7 +20,6 @@ public class Account {
         balance = balance.add(amount);
 
         statement.addOperationHistory(Operation.DEPOSIT, amount, balance);
-        printStatement(new ConsoleStatementPrinter());
     }
 
     public Amount withdrawal(final Amount amount) {
@@ -31,6 +28,8 @@ public class Account {
         }
 
         balance = balance.substract(amount);
+
+        statement.addOperationHistory(Operation.WITHDRAWAL, amount, balance);
 
         return amount;
     }
